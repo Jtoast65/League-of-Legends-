@@ -263,9 +263,86 @@ These aggregates confirm that early game performance metrics (first blood and go
 
 ## Assessment of Missingness
 
-*[This section will be updated as you complete Step 3 of your analysis]*
+This section assesses the missingness mechanisms for columns with missing values in our dataset. Understanding why data is missing is crucial for determining appropriate analysis strategies and avoiding bias.
 
-*Assess the missingness mechanisms for columns with missing values, including permutation tests and interpretations.*
+### Overview of Missing Values
+
+In our cleaned team-level dataset (25,098 rows), we identified missing values in the following key columns:
+
+- **First Blood (`firstblood`)**: 2 missing values (0.008%)
+- **10-Minute Data (`goldat10`, `golddiffat10`, `killsat10`)**: 3,786 missing values each (15.1%)
+
+### Missingness Mechanism for First Blood
+
+The `firstblood` column has only 2 missing values out of 25,098 team rows. Upon investigation, these missing values appear to be isolated data collection errors in specific games, not a systematic pattern. The missingness is not related to any other column in the dataset.
+
+**Conclusion**: The missingness of `firstblood` is **MCAR (Missing Completely at Random)**. The missing values are so rare and appear to be random data collection errors that they do not introduce systematic bias into our analysis.
+
+### Missingness Mechanism for 10-Minute Data
+
+The 10-minute metrics (`goldat10`, `golddiffat10`, `killsat10`) have 3,786 missing values (15.1% of team rows), which is a significant proportion. We investigated whether this missingness is MCAR or MAR through several analyses:
+
+#### 1. Relationship with Data Completeness
+
+We found a perfect relationship between missing 10-minute data and the `datacompleteness` column:
+
+- All 3,786 missing values occur in games marked as "partial" data completeness
+- No missing values occur in games marked as "complete"
+
+This suggests that missing 10-minute data is systematically related to incomplete game data collection.
+
+#### 2. Relationship with Game Length
+
+We examined whether missing 10-minute data is related to game length, hypothesizing that games that ended before 10 minutes would not have 10-minute metrics:
+
+- Games with missing 10-minute data have shorter average game lengths than games with complete data
+- This relationship suggests that shorter games (which may have ended before 10 minutes or had incomplete data collection) are more likely to have missing 10-minute metrics
+
+#### 3. Permutation Test: Missingness vs Game Length
+
+We performed a permutation test to statistically assess whether missingness of `goldat10` is dependent on `gamelength`:
+
+- **Null Hypothesis**: The missingness of `goldat10` is independent of `gamelength` (MCAR)
+- **Alternative Hypothesis**: The missingness of `goldat10` is dependent on `gamelength` (MAR)
+- **Test Statistic**: Difference in mean game length between missing and non-missing groups
+
+The permutation test results show a statistically significant relationship (p < 0.05), indicating that missingness of 10-minute data is dependent on game length. This provides evidence that the missingness is **MAR (Missing at Random)** rather than MCAR.
+
+#### 4. Permutation Test: Missingness vs Match Outcome
+
+We also tested whether missingness is related to match outcome (`result`) to ensure that filtering to complete cases won't introduce bias:
+
+- **Null Hypothesis**: The missingness of `goldat10` is independent of `result`
+- **Alternative Hypothesis**: The missingness of `goldat10` is dependent on `result`
+
+The permutation test results show no significant relationship (p > 0.05) between missingness and match outcome. This is important because it means that filtering to complete cases for analyses requiring 10-minute data will not introduce bias related to match outcomes.
+
+### Summary and Conclusions
+
+**First Blood (`firstblood`)**:
+
+- **Missingness Mechanism**: MCAR (Missing Completely at Random)
+- **Reasoning**: Only 2 missing values (0.008%), appear to be random data collection errors, not related to any other column
+- **Impact**: Negligible - can be safely excluded from analysis or imputed
+
+**10-Minute Data (`goldat10`, `golddiffat10`, `killsat10`)**:
+
+- **Missingness Mechanism**: MAR (Missing at Random)
+- **Reasoning**:
+  - Missingness is strongly related to `datacompleteness` (all missing in "partial" games)
+  - Missingness is related to `gamelength` (shorter games more likely to be missing)
+  - Permutation test confirms significant dependence on game length
+  - Missingness is NOT related to match outcome (`result`)
+- **Data Generating Process**: Games that ended before 10 minutes or had incomplete data collection don't have 10-minute metrics. This is a systematic pattern related to game characteristics (length, data completeness), not the values of the missing variables themselves.
+- **Impact**: For analyses requiring 10-minute data, we should filter to complete cases. The missingness is explainable and does not introduce bias related to match outcomes, making complete case analysis appropriate.
+
+**Implications for Analysis**:
+
+- For analyses requiring first blood data: The 2 missing values can be safely excluded or imputed
+- For analyses requiring 10-minute data: Filter to complete cases (21,312 rows with complete 10-minute data). This filtering is appropriate because:
+  - The missingness is explainable (related to game length and data completeness)
+  - The missingness is not related to match outcome, so filtering won't bias our results
+  - We still have a large sample size (21,312 team rows) for analysis
 
 ## Hypothesis Testing
 
