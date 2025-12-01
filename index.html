@@ -508,6 +508,35 @@
 
     <p>The permutation test results show no significant relationship (p &gt; 0.05) between missingness and match outcome. This is important because it means that filtering to complete cases for analyses requiring 10-minute data will not introduce bias related to match outcomes.</p>
 
+    <h3>Could the Missingness be NMAR (Not Missing At Random)?</h3>
+
+    <p><strong>NMAR (Not Missing At Random)</strong> would mean that the missingness depends on the actual, unobserved values of the missing variable itself. For example, if games with very low gold values at 10 minutes were more likely to have missing data, that would be NMAR.</p>
+
+    <p><strong>For First Blood (`firstblood`)</strong>:</p>
+    <ul>
+        <li>With only 2 missing values, it's extremely unlikely to be NMAR. The missingness appears random and unrelated to any variable, including the value of first blood itself.</li>
+    </ul>
+
+    <p><strong>For 10-Minute Data (`goldat10`, `golddiffat10`, `killsat10`)</strong>:</p>
+    <ul>
+        <li><strong>Why it's likely NOT NMAR</strong>: The missingness is systematically related to observable characteristics:
+            <ul>
+                <li>All missing values occur in "partial" games (datacompleteness)</li>
+                <li>Missing values are related to shorter game lengths</li>
+                <li>The permutation test confirms dependence on game length</li>
+                <li>Missingness is NOT related to match outcome</li>
+            </ul>
+        </li>
+        <li><strong>Why this suggests MAR, not NMAR</strong>: If the missingness were NMAR, we would expect it to be related to the actual values of gold at 10 minutes (e.g., very low or very high gold values being more likely missing). However, we observe that missingness is related to observable game characteristics (length, data completeness) rather than the unobserved gold values themselves.</li>
+        <li><strong>Conclusion</strong>: The missingness appears to be <strong>MAR (Missing at Random)</strong>, not NMAR, because:
+            <ol>
+                <li>We can explain the missingness using observed variables (game length, data completeness)</li>
+                <li>The missingness pattern makes sense given the data generating process (games that end early don't have 10-minute snapshots)</li>
+                <li>There's no evidence that the missingness depends on the actual, unobserved gold values</li>
+            </ol>
+        </li>
+    </ul>
+
     <h3>Summary and Conclusions</h3>
 
     <p><strong>First Blood (`firstblood`)</strong>:</p>
