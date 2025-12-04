@@ -1,0 +1,27 @@
+# Jekyll Configuration for GitHub Pages
+# Site settings
+title: "Early Game Advantage and Match Outcome in Professional League of Legends"
+description: "A data science project analyzing the relationship between early game performance and match outcomes in professional League of Legends esports matches."
+author: "Your Name"
+
+# Theme configuration
+# Using Cayman theme - a clean, documentation-friendly theme
+remote_theme: pages-themes/cayman@v0.2.0
+
+# Plugins
+plugins:
+  - jekyll-remote-theme
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - generate_visualizations.py
+  - README.md
+
