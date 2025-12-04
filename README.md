@@ -807,7 +807,7 @@ Based on the fairness analysis results:
 
 4. **Fairness constraints**: If significant fairness issues are detected, consider using fairness-aware machine learning techniques in future model iterations.
 
-5. **Subgroup-specific models**: If fairness issues persist, consider training separate models for different subgroups or using ensemble approaches.
+5. **Subgroup-specific models**: If fairness issues persist, consider training separate models for different subgroups or using ensemble strategies.
 
 ---
 
