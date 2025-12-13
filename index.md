@@ -232,15 +232,28 @@ Teams that secure first blood tend to also have a positive gold difference at 10
 
 #### 1. Win Rate by League
 
-Professional League Characteristics:
-
-- All leagues have win rates close to 50% (as expected from balanced competition)
-- Some leagues show slight variations in first blood rates and average gold differences at 10 minutes
-- The largest leagues (100+ games) show consistent patterns, indicating data reliability
-
 **Statistics by League (Top Leagues with 100+ games):**
 
-The following table shows key statistics for the top professional leagues with at least 100 games in the dataset. All leagues show win rates close to 50% as expected from balanced competition, with slight variations in first blood rates and average gold differences at 10 minutes.
+The following table shows key statistics for the top professional leagues with at least 100 games in the dataset.
+
+**Key Observations:**
+
+1. **Win Rates**: All leagues show exactly 50% win rates (0.500). This is expected because:
+   - Each match has exactly one winner and one loser
+   - The dataset contains team-level observations, so for every team that wins, there's a corresponding team that loses
+   - This perfect 50/50 split confirms the data structure is balanced and complete
+
+2. **First Blood Rates**: All leagues show first blood rates very close to 50% (0.499-0.500). This is also expected because:
+   - Each game has exactly one first blood event
+   - In team-level data, exactly half of all team observations will be from the team that got first blood
+   - The slight variation (0.499 vs 0.500) is likely due to rounding or very minor data inconsistencies
+
+3. **Average Gold Difference at 10 Minutes**: 
+   - Most leagues show 0.0 average gold difference, which makes sense because gold difference is calculated relative to the opponent
+   - When aggregated across all teams, positive and negative gold differences cancel out
+   - Some leagues (LDL, LPL) show "N/A" because 10-minute gold data is missing for those leagues (as identified in the missingness analysis)
+
+4. **League Size**: The dataset includes major professional leagues ranging from 612 games (LCS) to 1,884 games (LDL), providing substantial sample sizes for reliable analysis.
 
 | League | Win Rate | Games | First Blood Rate | Avg Gold Diff at 10 |
 |--------|----------|-------|------------------|---------------------|
