@@ -366,25 +366,6 @@ The permutation test results show no significant relationship (p > 0.05) between
 
 - **Conclusion**: The missingness appears to be **MAR (Missing at Random)**, not NMAR.
 
-### Summary and Conclusions
-
-**First Blood (`firstblood`)**:
-
-- **Missingness Mechanism**: MCAR (Missing Completely at Random)
-- **Reasoning**: Only 2 missing values (0.008%), appear to be random data collection errors, not related to any other column
-- **Impact**: Can be safely excluded from analysis or imputed
-
-**10-Minute Data (`goldat10`, `golddiffat10`, `killsat10`)**:
-
-- **Missingness Mechanism**: MAR (Missing at Random)
-- **Reasoning**:
-  - Missingness is strongly related to `datacompleteness` (all missing in "partial" games)
-  - Missingness is related to `gamelength` (shorter games more likely to be missing)
-  - Permutation test confirms significant dependence on game length
-  - Missingness is NOT related to match outcome (`result`)
-- **Data Generating Process**: Games that ended before 10 minutes or had incomplete data collection don't have 10-minute metrics. This is a systematic pattern related to game characteristics (length, data completeness), not the values of the missing variables themselves.
-- **Impact**: For analyses requiring 10-minute data, we should filter to complete cases. The missingness is explainable and does not introduce bias related to match outcomes, making complete case analysis appropriate.
-
 
 ## Hypothesis Testing
 
@@ -461,6 +442,8 @@ The hypothesis test confirms what our exploratory data analysis suggested: early
 ### Prediction Problem Statement
 
 We want to predict **match outcome** (`result`) - whether a team will win (1) or lose (0) based on early game performance metrics.
+
+**Why predict match outcome?** This directly addresses our research question about whether early game performance relates to match outcomes. If we can successfully predict outcomes from early game metrics, it demonstrates that early game advantages are meaningful and predictive. It is the most relevant metric for understanding competitive balance and game dynamics, making it a practical target in understanding when early leads translate to victories.
 
 ### Target Variable
 
