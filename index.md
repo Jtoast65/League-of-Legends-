@@ -6,7 +6,7 @@ layout: default
 
 ## Introduction
 
-League of Legends is one of the world's most popular competitive video games, with a thriving professional esports scene. Professional League of Legends matches are complex strategic affairs where teams compete to destroy the enemy's base while accumulating advantages through kills, objectives, and gold. Understanding what factors contribute to match outcomes is crucial for teams, analysts, and fans alike.
+League of Legends is one of the world's most popular video games, with a thriving professional esports scene. Professional League of Legends matches are complex strategic affairs where teams compete to destroy the enemy's base while accumulating advantages through kills, objectives, and gold. Understanding what factors contribute to match outcomes is crucial for teams, analysts, and fans alike.
 
 This project investigates the relationship between early game performance and match outcomes in professional League of Legends esports matches from 2022. The dataset contains detailed match data from Oracle's Elixir, with comprehensive statistics about player performance, team performance, and game state at various timestamps throughout each match.
 
