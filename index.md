@@ -270,7 +270,7 @@ The following table shows key statistics for the top professional leagues with a
 
 #### 2. Win Rate by Side
 
-The analysis shows that Blue and Red sides have very similar win rates (approximately 50% each), indicating that map side does not provide a significant advantage. This is important for ensuring balanced competition.
+The analysis shows that both sides have very similar win rates (approximately 50% each), indicating that map side does not provide a significant advantage. This is important for ensuring balanced competition.
 
 #### 3. First Blood Win Rate
 
@@ -278,7 +278,7 @@ The analysis shows that Blue and Red sides have very similar win rates (approxim
 
 #### 4. Gold Lead Win Rate
 
-**Key Finding**: Across all games with 10-minute data, approximately **60-65%** of games are won by the team that was ahead in gold at 10 minutes. This is substantially higher than 50%, indicating that early gold advantages are strongly predictive of match outcomes.
+**Key Finding**: Approximately **60-65%** of analyzed games are won by the team that was ahead in gold at 10 minutes. This is significantly higher than 50%, showing that early gold advantages are strongly predictive of match outcomes.
 
 When examining win rate by the **size of the gold lead**:
 - Small leads (0-500 gold): ~50-55% win rate
@@ -286,15 +286,15 @@ When examining win rate by the **size of the gold lead**:
 - Large leads (1000-2000 gold): ~70-75% win rate
 - Very large leads (2000+ gold): ~75-85% win rate
 
-This demonstrates a clear dose-response relationship: larger early advantages correspond to higher probabilities of winning.
+This demonstrates a clear relationship: larger early advantages correspond to higher probabilities of winning.
 
 #### 5. Summary Statistics
 
-These aggregates confirm that early game performance metrics (first blood and gold advantage at 10 minutes) are meaningfully associated with match outcomes, supporting our research question's premise that early game performance relates to match outcomes.
+These aggregates confirm that early game performance metrics are meaningfully associated with match outcomes, supporting our research question's premise that early game performance relates to match outcomes.
 
 ## Assessment of Missingness
 
-This section assesses the missingness mechanisms for columns with missing values in our dataset. Understanding why data is missing is crucial for determining appropriate analysis strategies and avoiding bias.
+This section addresses the missingness mechanisms for columns with missing values in our dataset.
 
 ### Overview of Missing Values
 
@@ -305,9 +305,9 @@ In our cleaned team-level dataset (25,098 rows), we identified missing values in
 
 ### Missingness Mechanism for First Blood
 
-The `firstblood` column has only 2 missing values out of 25,098 team rows. Upon investigation, these missing values appear to be isolated data collection errors in specific games, not a systematic pattern. The missingness is not related to any other column in the dataset.
+The `firstblood` column has only 2 missing values out of 25,098 team rows. After some investigation, these missing values appear to be isolated data collection errors in specific games, not a systematic pattern. The missingness is not related to any other column in the dataset.
 
-**Conclusion**: The missingness of `firstblood` is **MCAR (Missing Completely at Random)**. The missing values are so rare and appear to be random data collection errors that they do not introduce systematic bias into our analysis.
+**Conclusion**: The missingness of `firstblood` is **MCAR (Missing Completely at Random)**. The missing values are rare and appear to be random data collection errors. They do not introduce systematic bias into our analysis.
 
 ### Missingness Mechanism for 10-Minute Data
 
@@ -324,10 +324,10 @@ This suggests that missing 10-minute data is systematically related to incomplet
 
 #### 2. Relationship with Game Length
 
-We examined whether missing 10-minute data is related to game length, hypothesizing that games that ended before 10 minutes would not have 10-minute metrics:
+We examined whether the missing data is related to game length:
 
 - Games with missing 10-minute data have shorter average game lengths than games with complete data
-- This relationship suggests that shorter games (which may have ended before 10 minutes or had incomplete data collection) are more likely to have missing 10-minute metrics
+- This relationship suggests that shorter games, which may have ended before 10 minutes, are more likely to have missing 10-minute metrics
 
 #### 3. Permutation Test: Missingness vs Game Length
 
@@ -362,12 +362,9 @@ The permutation test results show no significant relationship (p > 0.05) between
   - The permutation test confirms dependence on game length
   - Missingness is NOT related to match outcome
   
-- **Why this suggests MAR, not NMAR**: If the missingness were NMAR, we would expect it to be related to the actual values of gold at 10 minutes (e.g., very low or very high gold values being more likely missing). However, we observe that missingness is related to observable game characteristics (length, data completeness) rather than the unobserved gold values themselves.
+- **Why this suggests MAR, not NMAR**: If the missingness were NMAR, we would expect it to be related to the actual values of gold at 10 minutes. However, we observe that missingness is related to observable game characteristics (length, data completeness) rather than the unobserved gold values themselves.
 
-- **Conclusion**: The missingness appears to be **MAR (Missing at Random)**, not NMAR, because:
-  1. We can explain the missingness using observed variables (game length, data completeness)
-  2. The missingness pattern makes sense given the data generating process (games that end early don't have 10-minute snapshots)
-  3. There's no evidence that the missingness depends on the actual, unobserved gold values
+- **Conclusion**: The missingness appears to be **MAR (Missing at Random)**, not NMAR.
 
 ### Summary and Conclusions
 
@@ -375,7 +372,7 @@ The permutation test results show no significant relationship (p > 0.05) between
 
 - **Missingness Mechanism**: MCAR (Missing Completely at Random)
 - **Reasoning**: Only 2 missing values (0.008%), appear to be random data collection errors, not related to any other column
-- **Impact**: Negligible - can be safely excluded from analysis or imputed
+- **Impact**: Can be safely excluded from analysis or imputed
 
 **10-Minute Data (`goldat10`, `golddiffat10`, `killsat10`)**:
 
@@ -388,17 +385,10 @@ The permutation test results show no significant relationship (p > 0.05) between
 - **Data Generating Process**: Games that ended before 10 minutes or had incomplete data collection don't have 10-minute metrics. This is a systematic pattern related to game characteristics (length, data completeness), not the values of the missing variables themselves.
 - **Impact**: For analyses requiring 10-minute data, we should filter to complete cases. The missingness is explainable and does not introduce bias related to match outcomes, making complete case analysis appropriate.
 
-**Implications for Analysis**:
-
-- For analyses requiring first blood data: The 2 missing values can be safely excluded or imputed
-- For analyses requiring 10-minute data: Filter to complete cases (21,312 rows with complete 10-minute data). This filtering is appropriate because:
-  - The missingness is explainable (related to game length and data completeness)
-  - The missingness is not related to match outcome, so filtering won't bias our results
-  - We still have a large sample size (21,312 team rows) for analysis
 
 ## Hypothesis Testing
 
-This section presents a formal hypothesis test to determine whether securing first blood provides a statistically significant advantage in professional League of Legends matches.
+This section demonstrates a hypothesis test to determine whether securing first blood provides a statistically significant advantage in professional League of Legends matches.
 
 ### Research Question
 
@@ -412,20 +402,19 @@ We test whether teams that secure first blood win at a rate significantly greate
 **Alternative Hypothesis (H₁)**: Teams that secure first blood win at a rate greater than 50%. First blood provides an advantage.
 - H₁: p > 0.5
 
-This is a one-sided hypothesis test, as we're specifically testing whether first blood provides an advantage (higher win rate), not just whether it differs from 50%.
+This is a one-sided hypothesis test. We are specifically testing whether first blood provides an advantage (higher win rate), not just whether it differs from 50%.
 
 ### Test Statistic
 
-We use the **proportion of games won by teams with first blood** as our test statistic. This directly measures whether first blood provides an advantage beyond what would be expected by chance (50%).
+We use the **proportion of games won by teams with first blood** as our test statistic. 
 
-For each game in our dataset, we determine whether the team that secured first blood won the match. The test statistic is the proportion of all games where this occurred.
 
 ### Data Preparation
 
-We work at the game level (not team level) to avoid double-counting. For each game:
-- We identify which team secured first blood
-- We determine whether that team won the match
-- We calculate the overall proportion of games where the team with first blood won
+We work at the game level (not team level) to avoid double-counting. For each game we:
+- Identify which team secured first blood
+- Determine whether that team won the match
+- Calculate the overall proportion of games where the team with first blood won
 
 ### Hypothesis Test Results
 
@@ -433,7 +422,7 @@ We performed two complementary tests:
 
 #### 1. Permutation Test
 
-A permutation test shuffles the win outcomes randomly under the null hypothesis (that first blood has no effect). This generates a null distribution of proportions, allowing us to assess how extreme our observed proportion is.
+The permutation test shuffled the win outcomes randomly under the null hypothesis (first blood has no effect). This generated a null distribution of proportions, allowing us to determine how extreme our observed proportion is.
 
 **Results**:
 - The permutation test shows that the observed proportion of games won by teams with first blood is significantly greater than 50%
@@ -441,7 +430,7 @@ A permutation test shuffles the win outcomes randomly under the null hypothesis 
 
 #### 2. Binomial Test
 
-A binomial test is the classical statistical test for proportions. It tests whether the observed number of successes (games won by team with first blood) is significantly greater than expected under the null hypothesis.
+The binomial test tests whether the observed number of successes (games won by team with first blood) is significantly greater than expected under the null hypothesis.
 
 **Results**:
 - The binomial test confirms the permutation test results
@@ -450,7 +439,7 @@ A binomial test is the classical statistical test for proportions. It tests whet
 
 ### Interpretation
 
-Both tests provide consistent, statistically significant evidence that **first blood provides a meaningful advantage** in professional League of Legends matches. Teams that secure first blood win at a rate significantly greater than the 50% that would be expected if first blood had no impact.
+Both tests provide consistent, statistically significant evidence that **first blood provides a meaningful advantage** in professional League of Legends matches.
 
 **Key Findings**:
 - The observed win rate for teams with first blood is approximately **55-58%** (depending on the specific dataset used)
@@ -459,54 +448,30 @@ Both tests provide consistent, statistically significant evidence that **first b
 
 ### Implications
 
-This hypothesis test provides statistical evidence supporting our research question's premise that early game performance (specifically, securing first blood) relates to match outcomes. The results suggest that:
+The hypothesis test results suggest that:
 
 1. **First blood is meaningful**: Securing first blood provides a measurable, statistically significant advantage
 2. **Early game matters**: This supports the strategic importance of early game performance in League of Legends
 3. **Practical relevance**: Teams and analysts can use this information to inform strategies and understand the value of early game aggression
 
-The hypothesis test confirms what our exploratory data analysis suggested: early game advantages, as measured by first blood, are associated with higher win rates in professional League of Legends matches.
+The hypothesis test confirms what our exploratory data analysis suggested: early game advantages, measured by first blood, are associated with higher win rates in professional League of Legends matches.
 
 ## Framing a Prediction Problem
 
-This section frames the prediction problem that we'll address in the subsequent modeling steps.
-
 ### Prediction Problem Statement
 
-We want to predict **match outcome** (`result`) - whether a team will win (1) or lose (0) - based on early game performance metrics. This is a **binary classification problem**.
+We want to predict **match outcome** (`result`) - whether a team will win (1) or lose (0) based on early game performance metrics.
 
 ### Target Variable
 
 **Target Variable**: `result`
 - **Type**: Binary (0 = loss, 1 = win)
-- **Problem Type**: Classification (specifically, binary classification)
+- **Problem Type**: Binary Classification
 - **Distribution**: Approximately 50/50 split (balanced classes)
 - **No missing values**: All team rows have complete match outcome data
 
 This is a binary classification problem because we're predicting which of two discrete categories (win or loss) a team belongs to, based on early game features.
 
-### Why This Prediction Problem is Interesting
-
-1. **Directly addresses research question**: Predicting match outcome from early game performance tests our core research question about the relationship between early game and match outcomes. If we can successfully predict outcomes from early game metrics, it demonstrates that early game performance is indeed meaningful and predictive.
-
-2. **Practical relevance**: 
-   - **Live analysis**: During a match, analysts can use early game metrics to predict the likely outcome and provide real-time insights
-   - **Strategic planning**: Teams can understand the value of early game advantages and adjust strategies accordingly
-   - **Fan engagement**: Viewers can better understand when an early lead is significant and likely to result in victory
-
-3. **Sufficient predictive signal**: Our exploratory analysis and hypothesis testing show that early game metrics (first blood, gold advantage) are meaningfully associated with match outcomes. Teams with first blood win approximately 55-58% of games, and teams ahead in gold at 10 minutes win approximately 60-65% of games. This suggests there is signal to learn from early game performance.
-
-4. **Challenging but feasible**: While League of Legends matches can be complex and unpredictable (with many factors affecting outcomes), early game metrics provide some predictive power. This makes the problem balanced - not trivial, but not impossible. The goal is to build a model that captures this signal while acknowledging that perfect prediction is unrealistic.
-
-5. **Actionable insights**: Understanding which early game factors most strongly predict outcomes can inform:
-   - **Team strategies**: Which early game objectives and plays are most valuable
-   - **Draft decisions**: How to select champions and compositions for early game strength
-   - **Gameplay approaches**: When to be aggressive or conservative based on early game state
-
-6. **Real-world application**: This type of prediction model could be used by:
-   - **Coaches and analysts**: To evaluate team performance and identify areas for improvement
-   - **Betting/odds markets**: To set more accurate predictions
-   - **Game developers**: To understand game balance and the impact of early game mechanics
 
 ### Features for Prediction
 
@@ -522,42 +487,39 @@ We'll use early game performance metrics as features to predict match outcome. B
 - `side`: Which side the team played on (Blue or Red)
 - `league`: The league/region (may capture skill differences between regions)
 
-**Note**: For models requiring 10-minute data, we'll filter to complete cases (21,312 rows with complete 10-minute data) as established in our missingness analysis. This filtering is appropriate because the missingness is MAR and not related to match outcome, so it won't introduce bias.
 
 ### Evaluation Considerations
 
 Since this is a **binary classification problem**, we'll use appropriate evaluation metrics:
 
-- **Accuracy**: Overall correctness of predictions - useful baseline metric
+- **Accuracy**: Overall correctness of predictions
 - **Precision/Recall/F1-Score**: Important given the balanced nature of the problem (approximately 50/50 split)
-- **ROC-AUC**: Measures the model's ability to distinguish between wins and losses, regardless of the threshold chosen
+- **ROC-AUC**: Measures the model's ability to distinguish between wins and losses, regardless of the chosen threshold
 
 **Model Evaluation**: We'll use appropriate cross-validation or train-test split to evaluate model performance and avoid overfitting. This ensures our results are generalizable to new matches.
 
 ## Baseline Model
 
-This section describes our baseline model, which serves as a simple comparison point for more sophisticated models.
-
 ### Baseline Model Description
 
-For a binary classification problem with balanced classes (~50/50), a reasonable baseline model is one that:
-1. Uses no features (or minimal features)
+For a binary classification problem with balanced classes (~50/50), a reasonable baseline model:
+1. Uses minimal or no features
 2. Provides a simple prediction rule
 3. Serves as a comparison point for more sophisticated models
 
 We use a **simple rule-based baseline**: Predict win (1) if the team secured first blood, otherwise predict loss (0).
 
-### Why This Baseline is Reasonable
+### Feature Types and Encoding
 
-1. **Simple and interpretable**: The baseline uses a single, easily understood rule based on first blood. Anyone can understand: "If the team got first blood, predict they'll win."
+The baseline model uses a single feature:
 
-2. **Better than random**: Since classes are balanced (~50/50), random guessing would achieve ~50% accuracy. Our baseline should perform better because it uses information (first blood) that we know from hypothesis testing is associated with wins (teams with first blood win ~55-58% of games).
+**Feature: `firstblood`**
+- **Type**: Nominal
+- **Encoding**: Already encoded as binary integers in the dataset:
+  - 0 = team did not get first blood
+  - 1 = team got first blood
 
-3. **No training required**: The baseline is a simple rule, making it computationally trivial and serving as a true "baseline" that any model should beat. There's no machine learning involved - just a straightforward if-then rule.
-
-4. **Meaningful comparison**: Since we know from hypothesis testing that first blood provides an advantage, this baseline captures that relationship in a simple way. Any more sophisticated model should improve upon this by incorporating additional features and learning more complex patterns.
-
-5. **Establishes a floor**: This baseline sets a minimum performance threshold that our final model must exceed to be considered successful. If a complex model can't beat this simple rule, it's not providing value.
+Since `firstblood` is already encoded as 0/1, we can directly use it in our rule-based prediction function without any transformation or preprocessing.
 
 ### Baseline Model Performance
 
@@ -574,39 +536,26 @@ We use a **simple rule-based baseline**: Predict win (1) if the team secured fir
 - **Recall**: Measures how often actual wins are correctly predicted
 - **F1-Score**: Harmonic mean of precision and recall
 
-**Comparison to Naive Baseline**:
-- Always predicting the majority class would achieve ~50% accuracy (since classes are balanced)
-- Our baseline improves upon this by ~5-8 percentage points by using first blood information
-- This demonstrates that first blood provides meaningful predictive signal
+### Is the Baseline Model a Good Model?
 
-### Baseline Model Limitations
+**Evaluation: The baseline model is a good starting point but not a good final model.**
 
-The baseline model has several limitations that a more sophisticated model should address:
+**Strengths:**
+- **Better than random**: Achieves 55-58% accuracy (5-8 points above 50%), demonstrating that first blood contains predictive signal
+- **Simple and interpretable**: Easy to understand
+- **No overfitting risk**: Fixed rule, not learned from data
+- **Establishes a performance floor**: Clear minimum threshold for comparisons
 
-1. **Uses only one feature**: Only considers first blood, ignoring other potentially valuable early game metrics like gold advantage, kills, etc.
+**Weaknesses:**
+- **Limited accuracy**: 55-58% accuracy means the model is wrong almost half the time
+- **Uses only one feature**: Ignores other early game metrics (gold advantage, kills, etc.)
+- **No nuance**: Makes binary predictions without considering magnitude of advantages
+- **No probability estimates**: Only provides hard predictions, limiting practical utility
 
-2. **Binary rule**: Makes hard predictions (win or loss) without considering the magnitude of advantages or other nuanced factors.
+**Conclusion**: The baseline model serves as a useful **comparison point** and demonstrates predictive signal exists in early game data. However, it is **not suitable for practical use** due to limited accuracy and inability to leverage multiple information sources. A good final model should significantly outperform this baseline.
 
-3. **No learning**: Doesn't learn from data - it's a fixed rule based on domain knowledge.
-
-4. **Limited predictive power**: While better than random, ~55-58% accuracy leaves significant room for improvement.
-
-5. **No probability estimates**: Doesn't provide win probabilities, only binary predictions.
-
-### Expectations for Final Model
-
-A successful final model should:
-- **Exceed baseline accuracy**: Achieve higher accuracy than the ~55-58% baseline
-- **Use multiple features**: Incorporate gold advantage, kills, and other early game metrics
-- **Provide probabilities**: Give win probability estimates, not just binary predictions
-- **Learn from data**: Use machine learning to discover patterns and relationships
-- **Be interpretable**: While more complex than the baseline, should still provide insights into which factors matter most
-
-The baseline model establishes that there is signal in early game performance (specifically first blood) that can be used for prediction. The final model should build upon this foundation to create a more powerful and nuanced predictor.
 
 ## Final Model
-
-This section describes our final model, which uses machine learning with multiple features to predict match outcomes.
 
 ### Final Model Description
 
@@ -615,7 +564,7 @@ Our final model uses **Logistic Regression** with multiple early game features t
 1. **Uses multiple features**: Incorporates first blood, gold advantage, kills, and other early game metrics
 2. **Learns from data**: Uses machine learning to discover patterns and relationships
 3. **Provides probabilities**: Outputs win probability estimates, not just binary predictions
-4. **Improves upon baseline**: Achieves higher accuracy than the simple first-blood-only baseline
+4. **Improves upon baseline**: Achieves higher accuracy than the first-blood-only baseline
 
 **Model Choice**: Logistic Regression is appropriate because:
 - It's well-suited for binary classification problems
