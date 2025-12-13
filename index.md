@@ -6,9 +6,9 @@ layout: default
 
 ## Introduction
 
-League of Legends is one of the world's most popular video games, with a thriving professional esports scene. Professional League of Legends matches are complex strategic affairs where teams compete to destroy the enemy's base while accumulating advantages through kills, objectives, and gold. Understanding what factors contribute to match outcomes is crucial for teams, analysts, and fans alike.
+League of Legends is one of the most well-known video games in the world, with a massive global player base and a highly developed professional esports scene. At the professional level, matches are very fast-paced and strategically complex. Each team aims to destroy the opposing base while gaining advantages through kills, objectives, map control, and gold. Because so many factors influence the flow of a game, it is extremely important for both players and game developers to know how they contribute to match outcomes.
 
-This project investigates the relationship between early game performance and match outcomes in professional League of Legends esports matches from 2022. The dataset contains detailed match data from Oracle's Elixir, with comprehensive statistics about player performance, team performance, and game state at various timestamps throughout each match.
+This project explores the relationship between early game performance and match outcomes in professional League of Legends esports matches from 2022. The dataset contains match data from Oracle's Elixir, with comprehensive statistics about player performance, team performance, and game state at various timestamps throughout each match.
 
 ## Research Question
 
@@ -16,18 +16,16 @@ This project investigates the relationship between early game performance and ma
 
 ### Why This Question Matters
 
-This question is interesting for several reasons:
-
-- **Strategic Importance**: Early game performance is often considered crucial in League of Legends, with many professional teams focusing heavily on early game strategies. Understanding the actual impact of early game advantages can inform team strategies and draft decisions.
+- **Strategic Importance**: Early game performance is crucial in League of Legends, hence why many professional teams focus heavily on early game strategies. Understanding the actual impact of early game advantages can impact team strategies and draft decisions.
 
 - **Data Availability**: We have detailed early game metrics (first blood, gold differences, objectives) that allow us to quantify "early game advantage" and test its relationship with match outcomes statistically.
 
 - **Practical Relevance**: Understanding the relationship between early game performance and outcomes can inform:
   - **Team Strategies**: Coaches and analysts can better understand the value of early game aggression and objective control
   - **Fan Expectations**: Viewers can better understand when a team's early lead is significant
-  - **Game Balance**: Understanding early game impact can inform discussions about game design and balance
+  - **Game Balance**: Information on early game impact can impact game design and balance
 
-- **Testable Hypothesis**: We can statistically test whether teams with early advantages (first blood, gold leads) win significantly more often than would be expected by chance, providing evidence-based insights into the importance of early game performance.
+- **Testable Hypothesis**: We can statistically test whether teams with early advantages win significantly more often than would be expected by chance, providing insights into the importance of early game performance.
 
 ## Dataset Overview
 
@@ -37,7 +35,7 @@ The dataset contains match data from professional League of Legends esports matc
 - **Number of rows**: 150,588
 - **Number of columns**: 164
 
-Each row in the dataset represents a participant (player) in a match, with detailed statistics about:
+Each row in the dataset represents a player in a match, with detailed statistics about:
 - Their individual performance (kills, deaths, assists, gold, damage, etc.)
 - Their team's performance (team kills, team deaths, objectives secured, etc.)
 - Game state at various timestamps (10 minutes, 15 minutes, 20 minutes, 25 minutes)
@@ -72,10 +70,10 @@ The dataset contains both player-level rows (one row per player per match) and t
 
 1. **Filtered to team-level rows**: The original dataset has 150,588 rows, but only 25,098 are team-level rows (one per team per match). This filtering is necessary because team-level rows contain aggregate statistics that are directly relevant to our question about early game team performance.
 
-2. **Handled missing 10-minute data**: Approximately 3,786 team rows (15.1%) are missing `goldat10`, `golddiffat10`, and `killsat10` values. This likely occurs because:
-   - Some games ended before reaching 10 minutes (very short games)
+2. **Handled missing 10-minute data**: Approximately 3,786 team rows (15.1%) are missing `goldat10`, `golddiffat10`, and `killsat10` values. This is likely because:
+   - Some games ended before reaching 10 minutes
    - Some games had incomplete data collection
-   - These missing values are related to the data generating process (games that didn't last long enough or had recording issues)
+   - The missing values are related to the data generating process (games that didn't last long enough or had recording issues)
 
 3. **Handled missing first blood data**: Only 2 team rows have missing `firstblood` values. These appear to be data collection issues in specific games.
 
@@ -85,7 +83,7 @@ The dataset contains both player-level rows (one row per player per match) and t
 - Team-level rows are created from aggregating player-level statistics within each match
 - Missing 10-minute metrics occur when games end early or when data collection was incomplete
 - The `result` column has no missing values, indicating complete match outcome data
-- For analyses requiring specific metrics (e.g., first blood or 10-minute gold), we filter to rows where those values are not missing
+- For analyses requiring specific metrics, we filter to rows where those values are not missing
 
 **Cleaned dataset summary:**
 - **Team-level rows**: 25,098 (representing ~12,549 unique matches)
@@ -105,7 +103,7 @@ The dataset contains both player-level rows (one row per player per match) and t
 
 #### 1. Match Outcomes
 
-The distribution of match outcomes is perfectly balanced, as expected. Each match has exactly one winner and one loser, so the win rate is approximately 50% (0.500) across all team observations.
+The distribution of match outcomes is perfectly balanced, as expected. Each match has one winner and one loser, so the win rate is approximately 50% (0.500) across all team observations.
 
 <iframe
   src="assets/distribution_match_outcomes.html"

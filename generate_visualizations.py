@@ -14,7 +14,7 @@ pd.options.plotting.backend = 'plotly'
 # Note: We don't need dsc80_utils for generating these visualizations
 
 # Load data
-lol_path = Path('../projects/proj04/2022_LoL_esports_match_data_from_OraclesElixir.csv')
+lol_path = Path('../dsc80-2025-fa/projects/proj04/2022_LoL_esports_match_data_from_OraclesElixir.csv')
 lol = pd.read_csv(lol_path, low_memory=False)
 
 # Create cleaned dataset
@@ -38,8 +38,8 @@ fig_result = px.bar(
     y=outcome_counts.values,
     title='Distribution of Match Outcomes',
     labels={'x': 'Outcome', 'y': 'Count'},
-    color=outcome_counts.values,
-    color_continuous_scale='RdYlGn'
+    color=['Loss (0)', 'Win (1)'],
+    color_discrete_sequence=['#EF553B', '#00cc96']  # Red for Loss, Teal for Win
 )
 fig_result.update_layout(showlegend=False)
 fig_result.write_html(output_dir / 'distribution_match_outcomes.html', include_plotlyjs='cdn')
