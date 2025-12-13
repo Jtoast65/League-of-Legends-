@@ -177,10 +177,10 @@ This suggests that first blood provides a meaningful early advantage that correl
 #### 2. Gold Difference at 10 Minutes vs Match Outcome
 
 There is a **strong positive relationship** between gold advantage at 10 minutes and match outcome:
-- Winners have a **positive mean gold difference** at 10 minutes (ahead in gold)
-- Losers have a **negative mean gold difference** at 10 minutes (behind in gold)
+- Winners have a **positive mean gold difference**
+- Losers have a **negative mean gold difference**
 
-The distributions of gold difference are clearly separated between winners and losers, with winners tending to have positive gold differences and losers tending to have negative gold differences.
+The distributions of gold difference are clearly separated between winners and losers, with winners tending to be ahead in gold at 10 minutes and losers tending to be behind in gold at 10 minutes.
 
 <iframe
   src="assets/gold_diff_by_outcome.html"
@@ -208,7 +208,7 @@ This suggests that not only does having a gold lead matter, but **the size of th
 
 #### 4. Gold Advantage, Game Length, and Outcome
 
-There appears to be some relationship between early gold advantage and game length. Games where one team has a substantial early lead tend to end faster (shorter game length), while closer games (smaller gold differences) tend to last longer.
+There appears to be some relationship between early gold advantage and game length. Games where one team has a significant early lead tend to end faster (shorter game length), while closer games (smaller gold differences) tend to last longer.
 
 <iframe
   src="assets/gold_diff_vs_game_length.html"
@@ -219,7 +219,7 @@ There appears to be some relationship between early gold advantage and game leng
 
 #### 5. First Blood and Gold Advantage
 
-Teams that secure first blood tend to also have a positive gold difference at 10 minutes, suggesting that first blood contributes to early game gold advantages. However, the relationship is not perfect - some teams with first blood end up behind in gold, and some teams without first blood are ahead.
+Teams that secure first blood tend to also have a positive gold difference at 10 minutes, suggesting that first blood contributes to early game gold advantages. However, the relationship is not perfect as some teams with first blood end up behind in gold, and some teams without first blood end up ahead.
 
 <iframe
   src="assets/gold_diff_by_fb_and_outcome.html"
@@ -232,7 +232,8 @@ Teams that secure first blood tend to also have a positive gold difference at 10
 
 #### 1. Win Rate by League
 
-Different professional leagues show varying characteristics:
+Professional League Characteristics:
+
 - All leagues have win rates close to 50% (as expected from balanced competition)
 - Some leagues show slight variations in first blood rates and average gold differences at 10 minutes
 - The largest leagues (100+ games) show consistent patterns, indicating data reliability
@@ -241,7 +242,18 @@ Different professional leagues show varying characteristics:
 
 The following table shows key statistics for the top professional leagues with at least 100 games in the dataset. All leagues show win rates close to 50% as expected from balanced competition, with slight variations in first blood rates and average gold differences at 10 minutes.
 
-*Note: The actual table with computed values will be generated when running the notebook code. The table will include columns for League, Win Rate, Games, First Blood Rate, and Avg Gold Diff at 10, showing the top 10 leagues by number of games.*
+| League | Win Rate | Games | First Blood Rate | Avg Gold Diff at 10 |
+|--------|----------|-------|------------------|---------------------|
+| LDL | 0.500 | 1884 | 0.499 | N/A |
+| LPL | 0.500 | 1572 | 0.499 | N/A |
+| PGC | 0.500 | 1128 | 0.499 | 0.0 |
+| LCSA | 0.500 | 1080 | 0.499 | 0.0 |
+| LCK | 0.500 | 934 | 0.500 | 0.0 |
+| UPL | 0.500 | 824 | 0.499 | 0.0 |
+| LCKC | 0.500 | 790 | 0.499 | 0.0 |
+| VCS | 0.500 | 650 | 0.500 | 0.0 |
+| LMF | 0.500 | 640 | 0.500 | 0.0 |
+| LCS | 0.500 | 612 | 0.500 | 0.0 |
 
 #### 2. Win Rate by Side
 
