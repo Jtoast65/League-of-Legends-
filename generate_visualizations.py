@@ -128,7 +128,7 @@ fig_fb_result = px.bar(
 )
 fig_fb_result.add_hline(y=50, line_dash="dash", line_color="red", 
                         annotation_text="50% (Expected)", annotation_position="right")
-fig_fb_result.update_layout(showlegend=False, yaxis_range=[40, 65])
+fig_fb_result.update_layout(showlegend=False, yaxis_range=[0, 100])
 fig_fb_result.write_html(output_dir / 'win_rate_by_first_blood.html', include_plotlyjs='cdn')
 print("  ✓ Win Rate by First Blood Status")
 

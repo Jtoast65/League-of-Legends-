@@ -125,7 +125,7 @@ First blood is distributed approximately evenly across teams (~50% of teams get 
 
 #### 3. Gold Difference at 10 Minutes
 
-The distribution of gold difference at 10 minutes is roughly symmetric around 0, as expected since in each match, one team has a positive gold difference and the other has the exact negative (equal magnitude). The distribution shows:
+The distribution of gold difference at 10 minutes is roughly symmetric around 0, which was expected since in each match, one team has a positive gold difference and the other has the exact negative (equal magnitude). The distribution shows:
 - Mean: Approximately 0 (very close to 0 due to symmetry)
 - Median: Approximately 0
 - Range: Gold differences typically range from about -3000 to +3000 gold
@@ -139,7 +139,7 @@ The distribution of gold difference at 10 minutes is roughly symmetric around 0,
 
 #### 4. Game Length
 
-Professional League of Legends matches in 2022 averaged approximately 28-30 minutes in length, with a median around 28 minutes. Games typically range from about 15 minutes (very short games) to 45+ minutes (long games).
+Professional League of Legends matches in 2022 averaged approximately 28-30 minutes in length, with a median around 28 minutes. Games typically range from about 15 minutes to 45+ minutes.
 
 <iframe
   src="assets/distribution_game_length.html"
@@ -163,7 +163,7 @@ The dataset includes matches from numerous professional leagues worldwide, with 
 
 #### 1. First Blood vs Match Outcome
 
-A key finding: **Teams that secure first blood have a higher win rate than teams that don't**. While the expected win rate would be 50% if first blood had no impact, teams with first blood win significantly more often than those without.
+Key finding: **Teams that secure first blood have a higher win rate than teams that don't**. While the expected win rate would be 50% if first blood had no impact, teams with first blood win significantly more often than those without.
 
 <iframe
   src="assets/win_rate_by_first_blood.html"
