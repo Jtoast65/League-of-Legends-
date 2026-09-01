@@ -274,15 +274,15 @@ The analysis shows that both sides have very similar win rates (approximately 50
 
 #### 3. First Blood Win Rate
 
-**Key Finding**: Across all games in the dataset, approximately **55-58%** of games are won by the team that secured first blood. This is significantly above the 50% that would be expected if first blood had no impact, suggesting first blood provides a meaningful advantage.
+**Key Finding**: Across the model-ready held-out test set, the first-blood rule baseline correctly predicts **59.32%** of team outcomes. Across all complete first-blood team rows, teams that secure first blood win **61.01%** of the time. Both figures are meaningfully above the 50% expected if first blood had no relationship with outcome.
 
 #### 4. Gold Lead Win Rate
 
-**Key Finding**: Approximately **60-65%** of analyzed games are won by the team that was ahead in gold at 10 minutes. This is significantly higher than 50%, showing that early gold advantages are strongly predictive of match outcomes.
+**Key Finding**: **69.62%** of analyzed team rows with a gold lead at 10 minutes went on to win. This is significantly higher than 50%, showing that early gold advantages are strongly predictive of match outcomes.
 
 When examining win rate by the **size of the gold lead**:
 - Small leads (0-500 gold): ~50-55% win rate
-- Moderate leads (500-1000 gold): ~60-65% win rate
+- Moderate leads (500-1000 gold): 65.71% win rate
 - Large leads (1000-2000 gold): ~70-75% win rate
 - Very large leads (2000+ gold): ~75-85% win rate
 
@@ -423,7 +423,7 @@ The binomial test tests whether the observed number of successes (games won by t
 Both tests provide consistent, statistically significant evidence that **first blood provides a meaningful advantage** in professional League of Legends matches.
 
 **Key Findings**:
-- The observed win rate for teams with first blood is approximately **55-58%** (depending on the specific dataset used)
+- The observed win rate for teams with first blood is **61.01%** across complete first-blood team rows
 - This is significantly higher than the 50% expected under the null hypothesis
 - The statistical significance (p < 0.05) indicates this is unlikely to occur by chance alone
 
@@ -509,12 +509,13 @@ Since `firstblood` is already encoded as 0/1, we can directly use it in our rule
 **Model**: Predict win if `firstblood == 1`, else predict loss
 
 **Dataset**: 
-- Filtered to rows with complete first blood data
+- Evaluated on the same model-ready complete-case split as the final model
 - Train/test split: 80/20 with stratification
 - Uses only the `firstblood` feature
 
 **Performance Metrics** (on test set):
-- **Accuracy**: Approximately 55-58% (depending on the specific dataset split)
+- **Test set size**: 4,263 team rows
+- **Accuracy**: 59.32%
 - **Precision**: Measures how often predicted wins are actual wins
 - **Recall**: Measures how often actual wins are correctly predicted
 - **F1-Score**: Harmonic mean of precision and recall
@@ -603,16 +604,17 @@ The final model uses the following features:
 **Model**: Logistic Regression with StandardScaler
 
 **Performance Metrics** (on test set):
-- **Accuracy**: Approximately 60-65%
-- **Precision**: Measures how often predicted wins are actual wins
-- **Recall**: Measures how often actual wins are correctly predicted
-- **F1-Score**: Harmonic mean of precision and recall
-- **ROC-AUC**: Measures the model's ability to distinguish between wins and losses (typically 0.65-0.70)
+- **Test set size**: 4,263 team rows
+- **Accuracy**: 69.86%
+- **Precision**: 69.33%
+- **Recall**: 71.19%
+- **F1-Score**: 70.25%
+- **ROC-AUC**: 0.7639
 
 **Comparison to Baseline**:
-- Baseline model accuracy: ~55-58% (first blood only)
-- Final model accuracy: ~60-65% (multiple features)
-- **Improvement**: ~5-10 percentage points increase in accuracy
+- Baseline model accuracy: 59.32% (first blood only)
+- Final model accuracy: 69.86% (multiple features)
+- **Improvement**: 10.53 percentage points increase in accuracy
 - The final model also provides probability estimates and uses multiple sources of information
 
 ### Feature Importance
@@ -637,7 +639,7 @@ The coefficients are interpretable: positive coefficients mean higher values inc
 
 3. **Provides probabilities**: Outputs win probability estimates (0-1), allowing for nuanced predictions and risk assessment. This is more informative than binary predictions.
 
-4. **Better performance**: Achieves higher accuracy (~60-65% vs ~55-58%) and provides ROC-AUC scores, demonstrating improved ability to distinguish between wins and losses.
+4. **Better performance**: Achieves higher accuracy (69.86% vs 59.32%) and a 0.7639 ROC-AUC, demonstrating improved ability to distinguish between wins and losses.
 
 5. **Interpretable**: Logistic regression coefficients show which features are most important for prediction, providing insights into what matters most for match outcomes. This helps answer our research question about which early game factors are most predictive.
 
@@ -648,7 +650,7 @@ The coefficients are interpretable: positive coefficients mean higher values inc
 
 The model demonstrates that **early game performance metrics are predictive of match outcomes**, with gold advantage at 10 minutes being the strongest predictor, followed by first blood. This supports our research question's premise that early game performance relates to match outcomes.
 
-However, the model's accuracy (~60-65%) also shows that **early game alone doesn't fully determine outcomes** - there's still significant uncertainty, likely due to mid-to-late game developments, team composition, player skill, and other factors not captured in early game metrics.
+However, the model's 69.86% accuracy also shows that **early game alone doesn't fully determine outcomes** - there's still significant uncertainty, likely due to mid-to-late game developments, team composition, player skill, and other factors not captured in early game metrics.
 
 ## Fairness Analysis
 
@@ -692,5 +694,3 @@ The model demonstrates fairness across map sides, indicating it does not exhibit
 
 
 ---
-
-*Note: This website will be updated as the analysis progresses. Visualizations and detailed results will be embedded as they are completed.*

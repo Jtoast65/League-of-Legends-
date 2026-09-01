@@ -29,6 +29,16 @@ output_dir.mkdir(exist_ok=True)
 
 print("Generating visualizations...")
 
+
+def write_chart(fig, filename):
+    """Write a responsive Plotly embed that keeps its height inside iframes."""
+    fig.write_html(
+        output_dir / filename,
+        include_plotlyjs='cdn',
+        default_width='100%',
+        default_height='500px',
+    )
+
 # UNIVARIATE ANALYSIS
 
 # 1. Match Outcomes
@@ -42,7 +52,7 @@ fig_result = px.bar(
     color_discrete_sequence=['#EF553B', '#00cc96']  # Red for Loss, Teal for Win
 )
 fig_result.update_layout(showlegend=False)
-fig_result.write_html(output_dir / 'distribution_match_outcomes.html', include_plotlyjs='cdn')
+write_chart(fig_result, 'distribution_match_outcomes.html')
 print("  ✓ Distribution of Match Outcomes")
 
 # 2. First Blood Distribution
@@ -56,7 +66,7 @@ fig_fb = px.bar(
     color_continuous_scale='Blues'
 )
 fig_fb.update_layout(showlegend=False)
-fig_fb.write_html(output_dir / 'distribution_first_blood.html', include_plotlyjs='cdn')
+write_chart(fig_fb, 'distribution_first_blood.html')
 print("  ✓ Distribution of First Blood")
 
 # 3. Gold Difference at 10 Minutes
@@ -71,7 +81,7 @@ fig_gold10 = px.histogram(
 fig_gold10.add_vline(x=0, line_dash="dash", line_color="red", 
                      annotation_text="Even", annotation_position="top")
 fig_gold10.update_layout(showlegend=False)
-fig_gold10.write_html(output_dir / 'distribution_gold_diff_at10.html', include_plotlyjs='cdn')
+write_chart(fig_gold10, 'distribution_gold_diff_at10.html')
 print("  ✓ Distribution of Gold Difference at 10 Minutes")
 
 # 4. Game Length
@@ -84,7 +94,7 @@ fig_length = px.histogram(
     marginal='box'
 )
 fig_length.update_layout(showlegend=False)
-fig_length.write_html(output_dir / 'distribution_game_length.html', include_plotlyjs='cdn')
+write_chart(fig_length, 'distribution_game_length.html')
 print("  ✓ Distribution of Game Length")
 
 # 5. League Distribution
@@ -98,7 +108,7 @@ fig_league = px.bar(
     color_continuous_scale='Viridis'
 )
 fig_league.update_layout(showlegend=False, xaxis_tickangle=-45)
-fig_league.write_html(output_dir / 'distribution_leagues.html', include_plotlyjs='cdn')
+write_chart(fig_league, 'distribution_leagues.html')
 print("  ✓ Distribution of Games by League")
 
 # BIVARIATE ANALYSIS
@@ -129,7 +139,7 @@ fig_fb_result = px.bar(
 fig_fb_result.add_hline(y=50, line_dash="dash", line_color="red", 
                         annotation_text="50% (Expected)", annotation_position="right")
 fig_fb_result.update_layout(showlegend=False, yaxis_range=[0, 100])
-fig_fb_result.write_html(output_dir / 'win_rate_by_first_blood.html', include_plotlyjs='cdn')
+write_chart(fig_fb_result, 'win_rate_by_first_blood.html')
 print("  ✓ Win Rate by First Blood Status")
 
 # 2. Gold Difference vs Match Outcome
@@ -156,7 +166,7 @@ for i, trace in enumerate(fig_gold_result.data):
         trace.name = 'Loss'
     elif trace.name == '1':
         trace.name = 'Win'
-fig_gold_result.write_html(output_dir / 'gold_diff_by_outcome.html', include_plotlyjs='cdn')
+write_chart(fig_gold_result, 'gold_diff_by_outcome.html')
 print("  ✓ Gold Difference at 10 Minutes by Match Outcome")
 
 # 3. Win Rate by Gold Advantage Ranges
@@ -183,7 +193,7 @@ fig_gold_bin.add_hline(y=50, line_dash="dash", line_color="red",
                        annotation_text="50% (Expected)", annotation_position="right")
 fig_gold_bin.update_layout(showlegend=False, yaxis_range=[0, 100])
 fig_gold_bin.update_traces(textposition="outside")
-fig_gold_bin.write_html(output_dir / 'win_rate_by_gold_ranges.html', include_plotlyjs='cdn')
+write_chart(fig_gold_bin, 'win_rate_by_gold_ranges.html')
 print("  ✓ Win Rate by Gold Difference Ranges")
 
 # 4. Gold Difference vs Game Length
@@ -209,7 +219,7 @@ for i, trace in enumerate(fig_scatter.data):
         trace.name = 'Loss'
     elif trace.name == '1':
         trace.name = 'Win'
-fig_scatter.write_html(output_dir / 'gold_diff_vs_game_length.html', include_plotlyjs='cdn')
+write_chart(fig_scatter, 'gold_diff_vs_game_length.html')
 print("  ✓ Gold Difference vs Game Length")
 
 # 5. First Blood and Gold Advantage
@@ -234,8 +244,7 @@ for i, trace in enumerate(fig_fb_gold.data):
         trace.name = 'Loss'
     elif trace.name == '1':
         trace.name = 'Win'
-fig_fb_gold.write_html(output_dir / 'gold_diff_by_fb_and_outcome.html', include_plotlyjs='cdn')
+write_chart(fig_fb_gold, 'gold_diff_by_fb_and_outcome.html')
 print("  ✓ Gold Difference by First Blood and Outcome")
 
 print(f"\n✓ All visualizations generated successfully in {output_dir}/")
-
